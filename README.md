@@ -3,7 +3,7 @@
 ---
 
 ## 참고 [Flux, Mono](https://brunch.co.kr/@springboot/154), [Subscriber](https://brunch.co.kr/@springboot/155)
-
+## 완전 정리 있는곳 참고 [Reactor 언제 어떤 Operator를 써야 할까?](https://luvstudy.tistory.com/100)
 ---
 
 ## Flux 를 생성하는 방법 
@@ -91,3 +91,18 @@ Flux 에서 제공하는 팩토리 메서드는 subscriber 를 등록해주는 �
 subscriber 가 필요없어서가 아니라, 내부 로직에서 자동으로 subscriber 를 만들어 준다. 
 
 개발자가 따로 subscriber 를 등록하지 않아도 된다.
+
+## Schedulers
+Project Reactor의 핵심 패키지 중 하나인 reactor.core.scheduler에는 Schedulers 라는 추상 클래스가 존재한다.
+이 Schedulers는 Scheduler 인터페이스의 팩토리 클래스이고, publishOn과 subscribeOn 을 위한 여러가지 팩토리 메서드를 제공한다.
+
+팩토리 메서드는 대표적으로 아래와 같다.
+
+parallel():  ExecutorService기반으로 단일 스레드 고정 크기(Fixed) 스레드 풀을 사용하여 병렬 작업에 적합함.
+single(): Runnable을 사용하여 지연이 적은 일회성 작업에 최적화
+elastic(): 스레드 갯수는 무한정으로 증가할 수 있고 수행시간이 오래걸리는 블로킹 작업에 대한 대안으로 사용할 수 있게 최적화 되어있다.
+boundedElastic(): 스레드 갯수가 정해져있고 elastic과 동일하게 수행시간이 오래걸리는 블로킹 작업에 대한 대안으로 사용할 수 있게 최적화 되어있다.
+immediate(): 호출자의 스레드를 즉시 실행한다.
+fromExecutorService(ExecutorService) : 새로운 Excutors 인스턴스를 생성한다.
+
+출처: https://devsh.tistory.com/entry/Schedulers-정리 [날샘 코딩]
